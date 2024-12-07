@@ -21,7 +21,7 @@
   
 
   --font-main: 'Inter-Variable', monospace, sans-serif;
-  --font-accent: 'PressStart2P', monospace, sans-serif;
+  --font-accent: 'PressStart2P', fantasy;
   --font-main-text: 400;
   --font-main-title: 700;
   --header-title-size: clamp(0.875rem, 0.6769rem + 0.8451vw, 1.4375rem);
