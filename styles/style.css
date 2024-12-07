@@ -98,19 +98,25 @@
 
 /* Добавила свойства для схлопывания и отображения по наведению своего текста */
 
-/* .article-text {
+.article-text {
   display: -webkit-box;
-  -webkit-line-clamp: 1;
-  flex-grow: 1;
-  -webkit-box-orient: vertical;
+  max-height: 1.5em;
   overflow: hidden;
-  text-overflow: ellipsis;
+  transition: max-height 1s linear;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 1;
 }
 
-.article-text:hover {
-  overflow: visible;
-  display: block;
-} */
+.article-text-accent {
+  max-height: 3em;
+  -webkit-line-clamp: 2;
+}
+
+.section__article-description:hover .article-text,
+.section__article-description:focus-within .article-text {
+  max-height: 500px;
+  -webkit-line-clamp: unset;
+}
 
 .section__article-image {
   position: relative;
@@ -129,21 +135,21 @@
 
 .article__image-label {
   position: absolute;
+  z-index: 2;
   opacity: 0.5;
   color: var(--button-accent-color, #000);
   font-family: var(--font-accent, 'Courier New', monospace, sans-serif);
   font-size: var(--accent-font-size, 14px);
   text-shadow: var(--label-shadow, -1px 0 #fff, 0 1px #fff, 1px 0 #fff, 0 -1px #fff);
-  inset-block-start: 25px;
-  inset-inline-end: clamp(13px, 1.7vw, 25px);
+  inset-block-start: clamp(23px, calc(23px + (25 - 23) * ((100vw - 375px) / (1440 - 375))), 25px);
+  inset-inline-end: clamp(11px, calc(11px + (25 - 11) * ((100vw - 375px) / (1440 - 375))), 25px);
   mix-blend-mode: hard-light;
 }
 
-@supports ((text-stroke: 1px var(--label-text-shadow)) or (-webkit-text-stroke: 1px var(--label-text-shadow))) {
-  .article__img-label {
+@supports (-webkit-text-stroke: 1px var(--label-text-shadow)) {
+  .article__image-label {
     text-shadow: none;
     -webkit-text-stroke: 1px var(--label-text-shadow, #fff);
-    text-stroke: 1px var(--label-text-shadow, #fff);
   }
 }
 
@@ -153,7 +159,6 @@
   gap: 4px;
   max-block-size: 39px;
 }
-
 
 /* Кнопки */
 
@@ -215,7 +220,6 @@
   transform: scale(1);
 }
 
-
 .card__icon-button:focus {
   outline: none;
 }
@@ -246,7 +250,6 @@
   
 }
 
-
 /* Подвал */
 
 .footer {
@@ -255,38 +258,33 @@
 }
 
 .button-save {
-  inline-size: clamp(310px, 81.6vw, 339px);
-  block-size: clamp(55px, calc(84px - (84 - 55) * ((100vw - 375px) / (1440 - 375))), 84px);
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
   align-items: center;
   gap: 0.53rem;
+  inline-size: clamp(310px, 81.6vw, 339px);
+  block-size: clamp(55px, calc(84px - (84 - 55) * ((100vw - 375px) / (1440 - 375))), 84px);
 }
 
 .button-save svg {
   position: relative;
   z-index: 1;
-  mix-blend-mode: difference;
   color: var(--button-text-color, #fff);
+  mix-blend-mode: difference;
   block-size: calc(28px - (28 - 21) * ((100vw - 375px) / (1440 - 375)));
 }
 
 
 .modal[open] {
   display: grid;
-  grid-template-columns: repeat(1, min-content);
+  grid-template-columns: repeat(2, min-content);
   grid-column-gap: 20px;
   grid-row-gap: 30px;
   align-items: center;
   border: var(--border-line, 2px solid #000);
   block-size: clamp(193px, calc(195px - (195 - 193) * ((100vw - 375px) / (1440 - 375))), 195px);
   inline-size: clamp(341px, calc(341px + (357 - 341) * ((100vw - 375px) / (1440 - 375))), 357px);
-
-
-  /* padding-inline: clamp(26px, calc(38px - (38 - 26) * ((100vw - 375px) / (1440 - 375))), 38px);
-  padding-block: 29.5px; */
-
 }
 
 .modal svg {
@@ -294,19 +292,17 @@
 }
 
 .modal__title {
-  inline-size: clamp(198px, 16.25vw, 234px);
   font-family: var(--font-accent, 'PressStart2P', monospace, sans-serif);
   font-size: var(--accent-font-size, 14px);
   line-height: 21px;
   text-transform: uppercase;
+  inline-size: clamp(198px, 16.25vw, 234px);
 }
 
 .modal__button {
   grid-column: 1 / 3;
   inline-size: clamp(257px, 20.35vw, 293px);
   block-size: 2.375rem;
-
-  
 }
 
 .modal[open]::backdrop {
@@ -314,14 +310,84 @@
   filter: opacity(0.75);
 }
 
-@media (width <= 450px) {
+@media (width <= 600px) {
   .button-save {
     flex-direction: column;
   }
+
+  .article-text {
+    max-height: 3em;
+    -webkit-line-clamp: 2;
+  }
+  
+  .article-text-accent {
+    max-height: 4.5em;
+    -webkit-line-clamp: 3;
+  }
 }
 
+/* Фильтры */
 
+.filter-light {
+  filter: brightness(50%);
+  transition: 0.5s linear;
+}
 
+.filter-light:hover {
+  filter: brightness(100%);
+}
 
+.filter-invert {
+  filter: invert(0.4);
+  transition: 1s ease-out;
+}
 
+.filter-invert:hover {
+  filter: invert(0);
+}
 
+.filter-opacity-sepia {
+  filter: opacity(50%) sepia(50%);
+  transition: 1.5s linear;
+}
+
+.filter-opacity-sepia:hover {
+  filter: opacity(100%) sepia(0);
+}
+
+.filter-hue-rotate {
+  filter: hue-rotate(0.9turn);
+  transition: 1.5s linear;
+}
+
+.filter-hue-rotate:hover {
+  filter: hue-rotate(0);
+}
+
+.filter-grayscale {
+  filter: grayscale(70%);
+  transition: 0.5s linear;
+}
+
+.filter-grayscale:hover {
+  filter: grayscale(0);
+
+}
+
+.filter-saturate {
+  filter: saturate(50%);
+  transition: 0.5s linear;
+}
+
+.filter-saturate:hover {
+  filter: saturate(110%);
+}
+
+.filter-blur {
+  filter: blur(0.3rem);
+  transition: 0.5s linear;
+}
+
+.filter-blur:hover {
+  filter: blur(0);
+}
