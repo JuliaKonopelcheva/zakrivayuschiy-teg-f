@@ -42,7 +42,7 @@
   font-family: var(--font-accent, 'PressStart2P-Regular', fantasy);
   text-transform: uppercase;
   background-color: var(--bg-color, #fff);
-  block-size: var(--header-container-height, clamp(327px, 25.56vw, 368px));
+  padding-block: clamp(120px, 8.9vw, 128px);
   inline-size: var(--header-container-width, min(100vw, 700px));
 
 }
@@ -150,7 +150,6 @@
   border: var( --border-line, 2px solid #000);
   padding: 0;
   background-color: var(--bg-color, #fff);
-  transition: box-shadow 0.3s ease;
   transition: 0.3s ease;
   cursor: pointer;
 }
@@ -274,6 +273,14 @@
   padding-block: 30px;
 }
 
+/* Все в порядке, я просто закоментила прошлый код и переверстала полностью диалог,
+а когда все сделала, старый код удалила и забыла про фон. Спасибо. */
+
+.modal[open]::backdrop { 
+  background-color: #000; 
+  filter: opacity(0.75); 
+} 
+
 .description-modal {
   display: flex; 
   align-items: center;
@@ -297,11 +304,6 @@
   inline-size: calc(257px + (36px * ((100vw - 375px) / 1065)));
   block-size: 2.375rem;
 }
-
-.modal[open]::backdrop { 
-  background-color: #000; 
-  filter: opacity(0.75); 
-} 
 
 @media (width <= 600px) {
   .button-save {
